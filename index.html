@@ -292,6 +292,17 @@
       color: var(--text-muted);
     }
 
+    .badge-deadline {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #dbeafe;
+      color: #1e40af;
+      white-space: nowrap;
+      margin-left: 6px;
+    }
+
     .task-group-note {
       font-size: 12px;
       color: var(--text-muted);
@@ -570,7 +581,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">A-2　特定商取引法に基づく表記の作成</span>
+          <span class="task-group-title">A-2　特定商取引法に基づく表記の作成 <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span>
           <span>▼</span>
         </div>
@@ -588,7 +599,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">A-2b　プライバシーポリシーの作成</span>
+          <span class="task-group-title">A-2b　プライバシーポリシーの作成 <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span>
           <span>▼</span>
         </div>
@@ -604,7 +615,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">A-3　商品資料の作成（ユニバペイ審査用）</span>
+          <span class="task-group-title">A-3　商品資料の作成（ユニバペイ審査用） <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span>
           <span>▼</span>
         </div>
@@ -631,7 +642,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-1　販売ページ（LP）の制作</span>
+          <span class="task-group-title">B-1　販売ページ（LP）の制作 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">コピーの方向性は <code>商品設計まとめ.md</code> PART 5 に確定済み。</div>
@@ -651,7 +662,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-2　特商法ページ・プライバシーポリシーをUTAGEに設置する</span>
+          <span class="task-group-title">B-2　特商法ページ・プライバシーポリシーをUTAGEに設置する <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -664,7 +675,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-3　審査フォーム・面談予約ページの設置</span>
+          <span class="task-group-title">B-3　審査フォーム・面談予約ページの設置 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">まず審査フォームで現状・変わりたい理由を受け取り、通過者にだけ面談予約ページ（Zoom）を手動で送る。</div>
@@ -686,7 +697,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-4　テレコムクレジット × UTAGE 連携</span>
+          <span class="task-group-title">B-4　テレコムクレジット × UTAGE 連携 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">テレコムクレジットのアカウントはすでにある。新規審査は不要で「設定依頼書を出す→数日で使える」流れ。</div>
@@ -704,7 +715,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-5　商品登録と決済ページの作成</span>
+          <span class="task-group-title">B-5　商品登録と決済ページの作成 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">B-4 の設定が完了してから作業する。テレコム or ユニバペイ、1つの商品ラインナップ内に複数の決済会社を混在させないこと。</div>
@@ -721,7 +732,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-5b　銀行振込フロー</span>
+          <span class="task-group-title">B-5b　銀行振込フロー <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">カード決済が間に合わない場合・振込を希望する人への対応。</div>
@@ -737,7 +748,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-5c　決済失敗・支払い途中離脱への対応</span>
+          <span class="task-group-title">B-5c　決済失敗・支払い途中離脱への対応 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -750,7 +761,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-6　LINE・メルマガをUTAGEのシナリオに登録する</span>
+          <span class="task-group-title">B-6　LINE・メルマガをUTAGEのシナリオに登録する <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note"><code>drafts/</code> フォルダの文面をUTAGEのシナリオに転記する。05〜08はURLなしで先に登録可。09〜16は公開前に B-6a でURL差し替えを完了すること。</div>
@@ -765,7 +776,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-7　全体の動作テスト（6月15日〜16日）</span>
+          <span class="task-group-title">B-7　全体の動作テスト <span class="badge-deadline">6/15〜16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">ローンチ前に「実際に使えるか」を自分で1回通しで確認する。テスト後にテストデータを必ず削除する。</div>
@@ -786,7 +797,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-8　タグ・ラベルの設定</span>
+          <span class="task-group-title">B-8　タグ・ラベルの設定 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">タグとは「この人はどこまで進んだか」を管理する目印。これがないと購入者に営業メールが届いてしまう。</div>
@@ -800,7 +811,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-9　メール到達率の確認</span>
+          <span class="task-group-title">B-9　メール到達率の確認 <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">01〜04 が実際に届いている時点で、LINE公式連携・SPF/DKIM等の基本設定は完了済み。05〜16 を登録するときに送信元・送信者名が統一されているかだけ念のため確認する。</div>
@@ -825,7 +836,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-1　勉強会動画の台本を仕上げる</span>
+          <span class="task-group-title">C-1　勉強会動画の台本を仕上げる <span class="badge-deadline">〜5/28</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">台本はほぼ完成（<code>scripts/勉強会動画-台本.md</code>・907行）。残りの確認作業だけ。</div>
@@ -840,7 +851,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-2　アクションプランシートのサンプルを作る</span>
+          <span class="task-group-title">C-2　アクションプランシートのサンプルを作る <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">面談の最後に「あなた専用のアクションプランシート」を渡すと約束している。動画内（⑦-3bのパート）でも画面に映して見せる。</div>
@@ -854,7 +865,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-3　動画を制作する（音声生成→映像生成→編集→確認）</span>
+          <span class="task-group-title">C-3　動画を制作する（音声生成→映像生成→編集→確認） <span class="badge-deadline" style="background:#fee2e2;color:#991b1b">〜6/14 ⚠️</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">AI生成で作る。台本確認が完了したらすぐ着手。全工程で2週間を見込む。</div>
@@ -874,7 +885,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-4　UTAGEに動画をアップする</span>
+          <span class="task-group-title">C-4　UTAGEに動画をアップする <span class="badge-deadline" style="background:#fee2e2;color:#991b1b">〜6/14 ⚠️</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">YouTubeは使わない。UTAGEにアップした動画を C-5 の視聴ページに埋め込む。</div>
@@ -887,7 +898,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-5　勉強会動画の専用視聴ページを作る（UTAGE）</span>
+          <span class="task-group-title">C-5　勉強会動画の専用視聴ページを作る（UTAGE） <span class="badge-deadline">6/14〜15</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">UTAGEのLPに C-4 でアップした動画を埋め込む専用ページ。このページのURLが <code>{{勉強会LP_URL}}</code> の差し替え先になる。登録から3日後にアクセスを封鎖する。</div>
@@ -917,7 +928,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">D-1　サポート体制を決める</span>
+          <span class="task-group-title">D-1　サポート体制を決める <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">LP・面談でも説明するので、ローンチ前に必ず決めておく。</div>
@@ -930,7 +941,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">D-3　モニター候補をリストアップする</span>
+          <span class="task-group-title">D-3　モニター候補をリストアップする <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -954,7 +965,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">E-1　面談スクリプトを作る</span>
+          <span class="task-group-title">E-1　面談スクリプトを作る <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -970,7 +981,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">E-2　面談後に送るメール・LINEを作る</span>
+          <span class="task-group-title">E-2　面談後に送るメール・LINEを作る <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -985,7 +996,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">E-3　申込フォーム・同意フォームを作る</span>
+          <span class="task-group-title">E-3　申込フォーム・同意フォームを作る <span class="badge-deadline">〜6/13</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">面談で「入ります」と言った人に正式な申込情報を入力してもらうフォーム。ここで規約への同意も取る。</div>
@@ -1013,7 +1024,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">F-1　会員サイト・教材の提供方法を決める</span>
+          <span class="task-group-title">F-1　会員サイト・教材の提供方法を決める <span class="badge-deadline">〜6/16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -1027,7 +1038,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">F-2　入金後の案内文を作る</span>
+          <span class="task-group-title">F-2　入金後の案内文を作る <span class="badge-deadline">〜6/16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -1040,7 +1051,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">F-3　受講生管理表を作る</span>
+          <span class="task-group-title">F-3　受講生管理表を作る <span class="badge-deadline">〜6/16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -1065,7 +1076,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">G-1　受講規約を作る</span>
+          <span class="task-group-title">G-1　受講規約を作る <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -1079,7 +1090,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">G-2　特定継続的役務に該当するか確認する <span class="badge-urgent">★必須</span></span>
+          <span class="task-group-title">G-2　特定継続的役務に該当するか確認する <span class="badge-urgent">★必須</span> <span class="badge-deadline">〜6/1</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">6ヶ月・55万円のため該当する可能性が高い。該当するとクーリングオフ・中途解約ルールが必要になる。専門家（行政書士・弁護士）への確認を推奨。</div>
@@ -1094,7 +1105,7 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">G-3　広告表現・LP表現をチェックする</span>
+          <span class="task-group-title">G-3　広告表現・LP表現をチェックする <span class="badge-deadline">〜6/16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
@@ -1120,7 +1131,7 @@
     <div class="phase-body">
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">H　ローンチ当日チェックリスト</span>
+          <span class="task-group-title">H　ローンチ当日チェックリスト <span class="badge-deadline">〜6/16</span></span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">6月17日に「公開して終わり」ではなく、申込・問い合わせ・不具合に対応できる状態を作る。</div>
