@@ -498,6 +498,7 @@
         <div><span class="task-id">B-4</span> テレコムクレジットとUTAGEを繋げる（rebill_param_id も依頼）</div>
         <div><span class="task-id">B-5</span> 商品登録・決済ページを作る（一括＋分割）</div>
         <div><span class="task-id">B-5b</span> 銀行振込フローを作る</div>
+        <div><span class="task-id">B-6</span> 05〜16 をシナリオに登録する（09〜16のURL差し替えだけC-5後に実施）</div>
         <div><span class="task-id">B-8</span> タグ・ラベルを設定する</div>
         <div><span class="task-id">B-9</span> メール到達率を確認する</div>
         <div><span class="task-id">E-1〜3</span> 面談スクリプト・フォロー文・申込フォームを作る</div>
@@ -508,8 +509,7 @@
       <div class="schedule-week-label">6月14日〜6月15日（C-4完了後にやること）</div>
       <div class="schedule-tasks">
         <div><span class="task-id">C-5</span> 勉強会動画の専用視聴ページを作る（UTAGE・3日間封鎖）← C-4完了後すぐ</div>
-        <div><span class="task-id">B-6a</span> 文面のプレースホルダーを埋める（C-5のURL）← C-5完了後</div>
-        <div><span class="task-id">B-6a</span> 09〜16の文面に視聴ページURLを差し替える（05〜08は先行登録可）</div>
+        <div><span class="task-id">B-6a</span> 09〜16の文面に視聴ページURLを差し替える＋全6ファイルの「◯◯分」を実際の尺に書き換える</div>
       </div>
     </div>
     <div class="schedule-week">
@@ -670,7 +670,7 @@
         <div class="task-group-note">まず審査フォームで現状・変わりたい理由を受け取り、通過者にだけ面談予約ページ（Zoom）を手動で送る。</div>
         <div class="checklist">
           <div class="check-item"><input type="checkbox" id="b3-1"><label class="check-label" for="b3-1">UTAGEで審査フォームを作る（LP・動画視聴ページのCTA先）</label></div>
-          <div class="check-item"><input type="checkbox" id="b3-2"><label class="check-label" for="b3-2">審査フォームの入力項目を設定する（氏名 / メール / 職種 / 年収帯 / 希望ルート / 困っていること / 変わりたい理由）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-2"><label class="check-label" for="b3-2">審査フォームの入力項目を設定する（氏名 / メール / 職種 / 年収帯 / 希望ルート / 困っていること / なぜ変わりたいのか）</label></div>
           <div class="check-item"><input type="checkbox" id="b3-3"><label class="check-label" for="b3-3">審査フォーム送信後の自動返信メールを作成する（確認後、通過者にLINEで案内と伝える）</label></div>
           <div class="check-item"><input type="checkbox" id="b3-4"><label class="check-label" for="b3-4">管理者に審査フォーム送信通知が届くように設定する</label></div>
           <div class="check-item"><input type="checkbox" id="b3-5"><label class="check-label" for="b3-5">審査通過者だけに送る面談予約ページを作る（UTAGEイベント機能）</label></div>
@@ -755,18 +755,17 @@
         </div>
         <div class="task-group-note"><code>drafts/</code> フォルダの文面をUTAGEのシナリオに転記する。05〜08はURLなしで先に登録可。09〜16は公開前に B-6a でURL差し替えを完了すること。</div>
         <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="b6a-1"><label class="check-label" for="b6a-1">【B-6a】<code>drafts/07-line-story.md</code> の「◯◯分」を実際の動画の長さに書き換える（C-3 撮影後に確定）</label></div>
+          <div class="check-item"><input type="checkbox" id="b6a-1"><label class="check-label" for="b6a-1">【B-6a】6ファイルの「◯◯分」を実際の動画の長さに書き換える（07, 09, 11, 12, 14, 15）← C-3d完了後に確定</label></div>
           <div class="check-item"><input type="checkbox" id="b6a-2"><label class="check-label" for="b6a-2">【B-6a】以下8ファイルの <code>{{勉強会LP_URL}}</code> を C-5 の視聴ページ URL に書き換える（09, 10, 11, 12, 13, 14, 15, 16）</label></div>
-          <div class="check-item"><input type="checkbox" id="b6-1"><label class="check-label" for="b6-1">UTAGE 管理画面で「メール・LINE配信」→「シナリオ」→「追加」をクリックする</label></div>
-          <div class="check-item"><input type="checkbox" id="b6-2"><label class="check-label" for="b6-2">LINE 8通を順番に登録する（01, 03, 05, 07, 09, 11, 13, 15）</label></div>
-          <div class="check-item"><input type="checkbox" id="b6-3"><label class="check-label" for="b6-3">メルマガ 8通を順番に登録する（02, 04, 06, 08, 10, 12, 14, 16）</label></div>
+          <div class="check-item" style="opacity:0.5"><input type="checkbox" id="b6-0" checked disabled><label class="check-label done" for="b6-0">✅ 01〜04 はすでに設定・配信済み。新たに登録不要</label></div>
+          <div class="check-item"><input type="checkbox" id="b6-1"><label class="check-label" for="b6-1">05〜16 をシナリオに登録する（登録日カウントで自動送信）</label></div>
           <div class="check-item"><input type="checkbox" id="b6-4"><label class="check-label" for="b6-4">LINE #3（30分後のフォローLINE）に「メルマガ登録済みの人は送らない」条件を設定する</label></div>
         </div>
       </div>
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">B-7　全体の動作テスト（6月14日〜16日）</span>
+          <span class="task-group-title">B-7　全体の動作テスト（6月15日〜16日）</span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="task-group-note">ローンチ前に「実際に使えるか」を自分で1回通しで確認する。テスト後にテストデータを必ず削除する。</div>
@@ -804,12 +803,10 @@
           <span class="task-group-title">B-9　メール到達率の確認</span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
-        <div class="task-group-note">メールが届かないだけで売上が落ちるため必須。SPF/DKIM/DMARCとはメールがなりすましでないと証明する設定。</div>
+        <div class="task-group-note">01〜04 が実際に届いている時点で、LINE公式連携・SPF/DKIM等の基本設定は完了済み。05〜16 を登録するときに送信元・送信者名が統一されているかだけ念のため確認する。</div>
         <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="b9-1"><label class="check-label" for="b9-1">送信元メールアドレスと送信者名（例：ルナ）を統一する</label></div>
-          <div class="check-item"><input type="checkbox" id="b9-2"><label class="check-label" for="b9-2">独自ドメインを使う場合、SPF/DKIM/DMARC を設定する</label></div>
-          <div class="check-item"><input type="checkbox" id="b9-3"><label class="check-label" for="b9-3">Gmail・Yahooメール・iCloudメールでテスト受信する</label></div>
-          <div class="check-item"><input type="checkbox" id="b9-4"><label class="check-label" for="b9-4">迷惑メールに入った場合の改善対応をする</label></div>
+          <div class="check-item"><input type="checkbox" id="b9-1"><label class="check-label" for="b9-1">05〜16 の送信元メールアドレスと送信者名が 01〜04 と統一されているか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b9-2"><label class="check-label" for="b9-2">テスト配信で迷惑メールに入らないか念のため確認する（05 登録後に1通送って確認）</label></div>
         </div>
       </div>
 
@@ -821,7 +818,7 @@
     <div class="phase-header" onclick="togglePhase(this)">
       <span class="phase-tag">C</span>
       <span class="phase-title">動画の制作</span>
-      <span class="phase-meta">5月28日〜6月10日</span>
+      <span class="phase-meta">5月28日〜6月14日</span>
       <span class="phase-chevron open">▼</span>
     </div>
     <div class="phase-body">
@@ -857,16 +854,21 @@
 
       <div class="task-group">
         <div class="task-group-header" onclick="toggleGroup(this)">
-          <span class="task-group-title">C-3　動画を撮影する</span>
+          <span class="task-group-title">C-3　動画を制作する（音声生成→映像生成→編集→確認）</span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
-        <div class="task-group-note">C-1・C-2 が完成してから撮影する。</div>
+        <div class="task-group-note">AI生成で作る。台本確認が完了したらすぐ着手。全工程で2週間を見込む。</div>
         <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="c3-1"><label class="check-label" for="c3-1">撮影する場所の背景・照明・マイクを整える</label></div>
-          <div class="check-item"><input type="checkbox" id="c3-2"><label class="check-label" for="c3-2">画面収録ソフトを準備する（Mac：QuickTime Player、Windows：OBS Studio など）</label></div>
-          <div class="check-item"><input type="checkbox" id="c3-3"><label class="check-label" for="c3-3">アクションプランシートのサンプル（C-2）を画面で開いておく</label></div>
-          <div class="check-item"><input type="checkbox" id="c3-4"><label class="check-label" for="c3-4">台本を見ながら通しでリハーサルを1回する</label></div>
-          <div class="check-item"><input type="checkbox" id="c3-5"><label class="check-label" for="c3-5">本番を撮影する（本編約51分＋延長3分）</label></div>
+          <div class="check-item"><input type="checkbox" id="c3a-1"><label class="check-label" for="c3a-1">【C-3a 音声】使うAI音声サービスを決める（例：ElevenLabs・Notta・VOICEVOX など）</label></div>
+          <div class="check-item"><input type="checkbox" id="c3a-2"><label class="check-label" for="c3a-2">【C-3a 音声】台本をセクションごとに音声生成し、通しで聴いて違和感を修正する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3a-3"><label class="check-label" for="c3a-3">【C-3a 音声】合計尺が54分前後に収まっているか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3b-1"><label class="check-label" for="c3b-1">【C-3b 映像】各セクションに対応するスライドまたはAI映像を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="c3b-2"><label class="check-label" for="c3b-2">【C-3b 映像】アクションプランシート（C-2）を画面に映せる形で用意する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3b-3"><label class="check-label" for="c3b-3">【C-3b 映像】実演パート（⑤-3）で使う画面録画を準備する（Geminiメイン・Claude補足）</label></div>
+          <div class="check-item"><input type="checkbox" id="c3c-1"><label class="check-label" for="c3c-1">【C-3c 編集】音声と映像を合わせてタイムラインに並べる</label></div>
+          <div class="check-item"><input type="checkbox" id="c3c-2"><label class="check-label" for="c3c-2">【C-3c 編集】テロップ・字幕・BGM・効果音を追加する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3d-1"><label class="check-label" for="c3d-1">【C-3d 確認】最初から最後まで通して視聴し、抜け・言い間違い・映像の乱れを修正する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3d-2"><label class="check-label" for="c3d-2">【C-3d 確認】最終的な尺が54分以内か確認する</label></div>
         </div>
       </div>
 
@@ -956,6 +958,7 @@
           <span class="task-group-count"></span><span>▼</span>
         </div>
         <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="e1-0"><label class="check-label" for="e1-0">審査通過者への面談案内メール・LINEの文面を作る（Zoomリンク・日時・持ち物を含む）</label></div>
           <div class="check-item"><input type="checkbox" id="e1-1"><label class="check-label" for="e1-1">面談の全体構成を決める（例：冒頭5分・ヒアリング15分・提案20分・案内10分）</label></div>
           <div class="check-item"><input type="checkbox" id="e1-2"><label class="check-label" for="e1-2">ヒアリング項目を作る（仕事・年収帯・AI利用経験・副業経験・使える時間・希望ルート・困っていること）</label></div>
           <div class="check-item"><input type="checkbox" id="e1-3"><label class="check-label" for="e1-3">3ルート別の提案パターンを作る</label></div>
@@ -1122,9 +1125,7 @@
         </div>
         <div class="task-group-note">6月17日に「公開して終わり」ではなく、申込・問い合わせ・不具合に対応できる状態を作る。</div>
         <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="h-1"><label class="check-label" for="h-1">LINE公式アカウントのMessaging API設定が完了しているか確認する</label></div>
-          <div class="check-item"><input type="checkbox" id="h-2"><label class="check-label" for="h-2">UTAGEとLINE公式アカウントの連携設定が有効か確認する</label></div>
-          <div class="check-item"><input type="checkbox" id="h-3"><label class="check-label" for="h-3">LINE公式アカウントのあいさつメッセージを確認する（UTAGEのウェルカムと重複しないか）</label></div>
+          <div class="check-item" style="opacity:0.5"><input type="checkbox" id="h-1" checked disabled><label class="check-label done" for="h-1">✅ LINE公式アカウントのMessaging API・UTAGE連携・あいさつメッセージ — 設定済み（01〜04が稼働中のため確認不要）</label></div>
           <div class="check-item"><input type="checkbox" id="h-4"><label class="check-label" for="h-4">LP・審査フォーム・面談予約ページ・動画視聴ページの URL を最終確認する</label></div>
           <div class="check-item"><input type="checkbox" id="h-5"><label class="check-label" for="h-5">LINE・メルマガの送信開始タイミングを確認する</label></div>
           <div class="check-item"><input type="checkbox" id="h-6"><label class="check-label" for="h-6">問い合わせ対応の担当者を決める</label></div>
