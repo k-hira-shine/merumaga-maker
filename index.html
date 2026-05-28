@@ -418,6 +418,45 @@
       min-width: 36px;
     }
 
+    /* ---- Sort toggle ---- */
+    .sort-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .sort-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .sort-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    .sort-btn.active {
+      border-color: var(--accent);
+      background: #eff6ff;
+      color: var(--accent);
+    }
+
+    .deadline-group-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      padding: 18px 0 6px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .deadline-group-header:first-child { padding-top: 0; }
+
     /* Responsive */
     @media (max-width: 600px) {
       .site-header { gap: 10px; }
@@ -550,6 +589,14 @@
       </div>
     </div>
   </div>
+
+  <!-- Sort toggle -->
+  <div class="sort-toggle">
+    <button class="sort-btn active" id="sortCategory" onclick="showCategoryView()">カテゴリ順（A→H）</button>
+    <button class="sort-btn" id="sortDeadline" onclick="showDeadlineView()">期限順（早い順）</button>
+  </div>
+
+  <div id="deadline-view" style="display:none"></div>
 
   <!-- PHASE A -->
   <div class="phase phase-a">
@@ -1232,6 +1279,84 @@
       updateGroupCounts();
     });
   });
+
+  // ---- Sort by deadline ----
+  const DEADLINE_MAP = {
+    'A-1':'06-01','A-2b':'06-01','A-2':'06-01','A-3':'06-01',
+    'B-1':'06-13','B-2':'06-13','B-3':'06-13','B-4':'06-13',
+    'B-5c':'06-13','B-5b':'06-13','B-5':'06-13',
+    'B-6':'06-13','B-7':'06-15','B-8':'06-13','B-9':'06-13',
+    'C-1':'05-28','C-2':'06-01','C-3':'06-14','C-4':'06-14','C-5':'06-15',
+    'D-1':'06-01','D-3':'06-13',
+    'E-1':'06-13','E-2':'06-13','E-3':'06-13',
+    'F-1':'06-16','F-2':'06-16','F-3':'06-16',
+    'G-1':'06-01','G-2':'06-01','G-3':'06-16',
+    'H':'06-16'
+  };
+
+  const DEADLINE_LABELS = {
+    '05-28':'📌 5/28（本日）',
+    '06-01':'📌 〜6/1（今週中）',
+    '06-13':'📌 〜6/13',
+    '06-14':'🔴 〜6/14（動画デッドライン）',
+    '06-15':'📌 6/15〜16（テスト・仕上げ）',
+    '06-16':'📌 〜6/16（ローンチ前日）'
+  };
+
+  const sortKeys = Object.keys(DEADLINE_MAP).sort((a, b) => b.length - a.length);
+  const originalPositions = [];
+
+  document.querySelectorAll('.task-group').forEach((g, i) => {
+    const title = g.querySelector('.task-group-title')?.textContent || '';
+    for (const key of sortKeys) {
+      if (title.includes(key + '\u3000') || title.includes(key + ' ') || title.startsWith(key)) {
+        g.dataset.deadline = DEADLINE_MAP[key];
+        break;
+      }
+    }
+    if (!g.dataset.deadline) g.dataset.deadline = '06-16';
+    originalPositions.push({ el: g, parent: g.parentElement, next: g.nextElementSibling, idx: i });
+  });
+
+  function showDeadlineView() {
+    document.getElementById('sortCategory').classList.remove('active');
+    document.getElementById('sortDeadline').classList.add('active');
+    document.querySelectorAll('.phase').forEach(p => p.style.display = 'none');
+    const container = document.getElementById('deadline-view');
+    container.style.display = '';
+    container.innerHTML = '';
+    const sorted = [...originalPositions].sort((a, b) => {
+      const cmp = a.el.dataset.deadline.localeCompare(b.el.dataset.deadline);
+      return cmp !== 0 ? cmp : a.idx - b.idx;
+    });
+    let cur = '';
+    sorted.forEach(item => {
+      if (item.el.dataset.deadline !== cur) {
+        cur = item.el.dataset.deadline;
+        const h = document.createElement('div');
+        h.className = 'deadline-group-header';
+        h.textContent = DEADLINE_LABELS[cur] || cur;
+        container.appendChild(h);
+      }
+      container.appendChild(item.el);
+    });
+    updateGroupCounts();
+  }
+
+  function showCategoryView() {
+    document.getElementById('sortDeadline').classList.remove('active');
+    document.getElementById('sortCategory').classList.add('active');
+    document.getElementById('deadline-view').style.display = 'none';
+    originalPositions.forEach(item => {
+      if (item.next) {
+        item.parent.insertBefore(item.el, item.next);
+      } else {
+        item.parent.appendChild(item.el);
+      }
+    });
+    document.querySelectorAll('.phase').forEach(p => p.style.display = '');
+    updateGroupCounts();
+  }
 
   load();
   updateGroupCounts();
