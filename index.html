@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ローンチタスク管理 — 2026年6月17日</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a202c;
+      --text-muted: #718096;
+      --accent: #3b82f6;
+      --accent-light: #eff6ff;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --yellow-light: #fffbeb;
+      --phase-a: #f0fdf4;
+      --phase-b: #eff6ff;
+      --phase-c: #fdf4ff;
+      --phase-d: #fff7ed;
+      --phase-e: #fef2f2;
+      --phase-f: #f0fdfa;
+      --phase-g: #fefce8;
+      --phase-h: #f5f3ff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ---- Header ---- */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .site-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .site-header .launch-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--yellow-light);
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-weight: 600;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .progress-bar-outer {
+      width: 160px;
+      height: 8px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background: var(--green);
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-label { color: var(--text-muted); }
+
+    .btn-reset {
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .btn-reset:hover { background: var(--bg); }
+
+    /* ---- Layout ---- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* ---- Info cards ---- */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .info-card .label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 4px;
+    }
+
+    .info-card .value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ---- Flow ---- */
+    .flow-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .flow-box h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .flow-step-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 24px;
+    }
+
+    .flow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .flow-line {
+      width: 2px;
+      flex: 1;
+      min-height: 20px;
+      background: var(--border);
+      margin: 2px 0;
+    }
+
+    .flow-step-text {
+      font-size: 14px;
+      padding-bottom: 16px;
+    }
+
+    /* ---- Phase section ---- */
+    .phase {
+      margin-bottom: 28px;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+
+    .phase-header:hover { filter: brightness(.97); }
+
+    .phase-a .phase-header { background: var(--phase-a); }
+    .phase-b .phase-header { background: var(--phase-b); }
+    .phase-c .phase-header { background: var(--phase-c); }
+    .phase-d .phase-header { background: var(--phase-d); }
+    .phase-e .phase-header { background: var(--phase-e); }
+    .phase-f .phase-header { background: var(--phase-f); }
+    .phase-g .phase-header { background: var(--phase-g); }
+    .phase-h .phase-header { background: var(--phase-h); }
+
+    .phase-tag {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(0,0,0,.08);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+
+    .phase-title {
+      font-size: 15px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .phase-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .phase-chevron {
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform .2s;
+    }
+
+    .phase-chevron.open { transform: rotate(180deg); }
+
+    .phase-body {
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    /* ---- Task group ---- */
+    .task-group {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .task-group:last-child { border-bottom: none; }
+
+    .task-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .task-group-header:hover { background: var(--bg); }
+
+    .task-group-title {
+      font-size: 14px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .task-group-count {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .task-group-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 0 16px 10px 16px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ---- Checklist ---- */
+    .checklist { padding: 0 16px 12px; }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 6px 0;
+      border-radius: 6px;
+    }
+
+    .check-item.sub {
+      padding-left: 24px;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      border-radius: 4px;
+      border: 2px solid #cbd5e0;
+      flex-shrink: 0;
+      cursor: pointer;
+      margin-top: 2px;
+      accent-color: var(--green);
+    }
+
+    .check-label {
+      font-size: 14px;
+      line-height: 1.5;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .check-label.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .check-label code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 12px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+    }
+
+    .badge-urgent {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: #fef2f2;
+      color: var(--red);
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ---- Schedule ---- */
+    .schedule-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .schedule-box h2 {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 18px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .schedule-week {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .schedule-week:last-child { border-bottom: none; }
+
+    .schedule-week-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .schedule-tasks {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    .schedule-tasks .task-id {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 36px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { gap: 10px; }
+      .progress-bar-outer { width: 100px; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>🚀 ローンチタスク管理</h1>
+  <span class="launch-date">📅 2026年6月17日（火）ローンチ</span>
+  <div class="progress-wrap">
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
+    </div>
+    <span class="progress-label" id="progressLabel">0 / 0 完了</span>
+  </div>
+  <button class="btn-reset" onclick="resetAll()">リセット</button>
+</header>
+
+<div class="container">
+
+  <!-- 決定済み前提 -->
+  <div class="info-grid">
+    <div class="info-card"><div class="label">販売価格</div><div class="value">55万円（税込）</div></div>
+    <div class="info-card"><div class="label">分割払い</div><div class="value">あり（回数はB-4後に確定）</div></div>
+    <div class="info-card"><div class="label">提供期間</div><div class="value">6ヶ月</div></div>
+    <div class="info-card"><div class="label">視聴ページ</div><div class="value">UTAGE専用ページ（C-5）</div></div>
+    <div class="info-card"><div class="label">3日間限定</div><div class="value">封鎖あり（アクセス期限）</div></div>
+    <div class="info-card"><div class="label">面談担当</div><div class="value">複数人対応</div></div>
+    <div class="info-card"><div class="label">決済優先</div><div class="value">テレコム → ユニバペイ</div></div>
+    <div class="info-card"><div class="label">モニター</div><div class="value">55万円・人数制限なし</div></div>
+  </div>
+
+  <!-- フロー -->
+  <div class="flow-box">
+    <h2>全体の流れ（お客さんの動き）</h2>
+    <div class="flow-steps">
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">YouTube / SNS で知る</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">LINE 友だち追加 または メルマガ登録</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">ステップ配信（LINE 8通 + メルマガ 8通、6日間）</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">勉強会動画を視聴（UTAGEの専用ページ・登録から3日間限定・封鎖あり）</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">面談申込フォームに入力（Zoomリンクが自動で届く）</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">面談（Zoom・複数担当者で対応）</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">申込案内メール → 申込フォームに入力・規約に同意</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">カード決済（テレコムクレジット・一括または分割）または 銀行振込</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div><div class="flow-line"></div></div><div class="flow-step-text">入金確認メール → 会員サイトへのログイン案内</div></div>
+      <div class="flow-step"><div class="flow-step-connector"><div class="flow-dot"></div></div><div class="flow-step-text">受講開始（6ヶ月サポート）</div></div>
+    </div>
+  </div>
+
+  <!-- スケジュール -->
+  <div class="schedule-box">
+    <h2>逆算スケジュール</h2>
+    <div class="schedule-week">
+      <div class="schedule-week-label">今週（5月28日〜6月1日）</div>
+      <div class="schedule-tasks">
+        <div><span class="task-id">A-1</span> ユニバペイ申請を送信する</div>
+        <div><span class="task-id">A-2</span> 特商法ページの文案を作る</div>
+        <div><span class="task-id">A-2b</span> プライバシーポリシーを作る</div>
+        <div><span class="task-id">A-3</span> 商品資料を作る（ユニバペイ審査用）</div>
+        <div><span class="task-id">C-1</span> 動画台本を仕上げる（日付表現を修正）</div>
+        <div><span class="task-id">C-2</span> アクションプランシートのサンプルを作る</div>
+        <div><span class="task-id">D-1</span> サポート体制を決める</div>
+        <div><span class="task-id">G-1</span> 受講規約を作る</div>
+        <div><span class="task-id">G-2</span> 特定継続的役務に該当するか確認する ⚠️ 6ヶ月・55万円のため必須</div>
+      </div>
+    </div>
+    <div class="schedule-week">
+      <div class="schedule-week-label">6月2日〜6月10日</div>
+      <div class="schedule-tasks">
+        <div><span class="task-id">B-1</span> LP（販売ページ）を制作する</div>
+        <div><span class="task-id">B-2</span> 特商法ページ・プライバシーポリシーをUTAGEに設置する</div>
+        <div><span class="task-id">B-3</span> 面談フォームを設置する（複数担当者・Zoom連携）</div>
+        <div><span class="task-id">B-4</span> テレコムクレジットとUTAGEを繋げる（rebill_param_id も依頼）</div>
+        <div><span class="task-id">B-5</span> 商品登録・決済ページを作る（一括＋分割）</div>
+        <div><span class="task-id">B-5b</span> 銀行振込フローを作る</div>
+        <div><span class="task-id">C-3</span> 動画を撮影する</div>
+        <div><span class="task-id">C-4</span> YouTubeに限定公開でアップする</div>
+        <div><span class="task-id">C-5</span> 勉強会動画の専用視聴ページを作る（UTAGE・3日間封鎖）</div>
+        <div><span class="task-id">B-6a</span> 文面のプレースホルダーを埋める（C-5のURL）</div>
+        <div><span class="task-id">B-6</span> LINE・メルマガをUTAGEのシナリオに登録する</div>
+        <div><span class="task-id">B-8</span> タグ・ラベルを設定する</div>
+        <div><span class="task-id">B-9</span> メール到達率を確認する</div>
+        <div><span class="task-id">E-1</span> 面談スクリプトを作る</div>
+        <div><span class="task-id">E-2</span> 面談後メール・LINEを作る</div>
+        <div><span class="task-id">E-3</span> 申込フォーム・同意フォームを作る</div>
+        <div><span class="task-id">D-3</span> モニター候補をリストアップする</div>
+      </div>
+    </div>
+    <div class="schedule-week">
+      <div class="schedule-week-label">6月11日〜6月16日（仕上げ）</div>
+      <div class="schedule-tasks">
+        <div><span class="task-id">B-7</span> 全体の動作テストをする（①〜⑤ + データ後始末）</div>
+        <div><span class="task-id">F-1</span> 会員サイト・教材の提供方法を決める</div>
+        <div><span class="task-id">F-2</span> 入金後の案内文を作る</div>
+        <div><span class="task-id">F-3</span> 受講生管理表を作る</div>
+        <div><span class="task-id">G-3</span> 広告表現・LP表現をチェックする</div>
+        <div><span class="task-id">H</span> ローンチ当日の運用を準備する・LINE連携の最終確認</div>
+      </div>
+    </div>
+    <div class="schedule-week">
+      <div class="schedule-week-label">6月17日（火） 🎉 ローンチ ＝ 面談受付スタート</div>
+      <div class="schedule-tasks">
+        <div>面談実施 → 面談後フォロー → 入金確認 → 受講開始（PHASE E・F）</div>
+        <div>ユニバペイ審査通過後、追加決済手段として連携（B-4c）</div>
+        <div>分割払いの回数・月額を確定する（B-4 完了後）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE A -->
+  <div class="phase phase-a">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">A</span>
+      <span class="phase-title">今週中に着手する（申請系・法的準備）</span>
+      <span class="phase-meta">5月28日〜6月1日</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">A-1　ユニバペイ申請 <span class="badge-urgent">★今週中</span></span>
+          <span class="task-group-count"></span>
+          <span>▼</span>
+        </div>
+        <div class="task-group-note">クレジットカード決済の審査機関。審査に3〜4週間かかる。テレコムクレジットが主軸だが、予備・追加として早めに申請しておく。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="a1-1"><label class="check-label" for="a1-1">以下の情報を手元に準備する（屋号または本名 / 住所 / 事業開始年月日 / 年商 / インボイス登録番号 / 振込先口座）</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-2"><label class="check-label" for="a1-2">免許証の表と裏を撮影する（またはPDFでスキャン）</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-3"><label class="check-label" for="a1-3">univapay.com でアカウントを作り、審査申込フォームを開く</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-4"><label class="check-label" for="a1-4">フォームに企業・代表者・口座・店舗の情報を入力する</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-5"><label class="check-label" for="a1-5">「販売価格の最小〜最大」欄に <code>550,000〜550,000</code> と入力する</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-6"><label class="check-label" for="a1-6">「特定商取引法ページURL」欄に A-2 で取得した URL を入力する（先に A-2 を作る）</label></div>
+          <div class="check-item"><input type="checkbox" id="a1-7"><label class="check-label" for="a1-7">送信して審査スタート</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">A-2　特定商取引法に基づく表記の作成</span>
+          <span class="task-group-count"></span>
+          <span>▼</span>
+        </div>
+        <div class="task-group-note">ネットで物を売るときに法律で公開が義務付けられている販売者情報ページ。LP のフッターにリンクを貼り、ユニバペイの審査でも URL を求められる。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="a2-1"><label class="check-label" for="a2-1"><code>materials/tokutei-shoho.md</code> を新規作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-2"><label class="check-label" for="a2-2">販売業者名 / 運営責任者名 / 所在地 / 電話番号 / メールアドレス を記入する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-3"><label class="check-label" for="a2-3">販売価格：550,000円（税込）を記入する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-4"><label class="check-label" for="a2-4">支払方法：クレジットカード（テレコムクレジット or ユニバペイ）／銀行振込 を記入する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-5"><label class="check-label" for="a2-5">サービス提供時期：契約後3営業日以内にアクセスを付与（提供期間：6ヶ月）を記入する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-6"><label class="check-label" for="a2-6">返品・キャンセル：デジタルコンテンツのため原則返品不可 を記入する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2-7"><label class="check-label" for="a2-7">UTAGE にページを作成して URL を取得する（→ B-2 と同時に作業）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">A-2b　プライバシーポリシーの作成</span>
+          <span class="task-group-count"></span>
+          <span>▼</span>
+        </div>
+        <div class="task-group-note">氏名・メール・年収帯・職種などを収集するため、特商法とは別に必要。LP のフッターに特商法ページと並べてリンクを貼る。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="a2b-1"><label class="check-label" for="a2b-1"><code>materials/privacy-policy.md</code> を新規作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2b-2"><label class="check-label" for="a2b-2">収集する個人情報の項目を明記する（氏名・メール・電話番号・年収帯・職種など）</label></div>
+          <div class="check-item"><input type="checkbox" id="a2b-3"><label class="check-label" for="a2b-3">利用目的・第三者への提供・管理方法・お問い合わせ先を記載する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2b-4"><label class="check-label" for="a2b-4">UTAGE にページを作成して URL を取得する</label></div>
+          <div class="check-item"><input type="checkbox" id="a2b-5"><label class="check-label" for="a2b-5">LP のフッターにリンクを追加する（B-1 と同時に）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">A-3　商品資料の作成（ユニバペイ審査用）</span>
+          <span class="task-group-count"></span>
+          <span>▼</span>
+        </div>
+        <div class="task-group-note">LP 未完成の状態でユニバペイに審査を出すための代替資料（10ページ以内）。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="a3-1"><label class="check-label" for="a3-1"><code>materials/shohin-shiryo.md</code> を新規作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="a3-2"><label class="check-label" for="a3-2">商品名・価格（550,000円税込）・商品の内容（3〜4行）を記載する</label></div>
+          <div class="check-item"><input type="checkbox" id="a3-3"><label class="check-label" for="a3-3">カリキュラム概要（STEP 0〜3）・サポート内容・対象者・提供期間（6ヶ月）を記載する</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE B -->
+  <div class="phase phase-b">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">B</span>
+      <span class="phase-title">UTAGEの設定</span>
+      <span class="phase-meta">6月2日〜6月13日</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-1　販売ページ（LP）の制作</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">コピーの方向性は <code>商品設計まとめ.md</code> PART 5 に確定済み。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b1-1"><label class="check-label" for="b1-1">UTAGE 管理画面で「ファネル」→「追加」をクリックしてテンプレートを選ぶ</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-2"><label class="check-label" for="b1-2">ファーストビュー：<code>商品設計まとめ.md</code> PART 5 のA〜C案から1つ選んでコピーを貼る</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-3"><label class="check-label" for="b1-3">悩みのセクション：ペルソナ（鈴木くん）の3つの悩みを箇条書きで載せる</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-4"><label class="check-label" for="b1-4">解決策のセクション：差別化7軸の中から3〜4つ選んでわかりやすく説明する</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-5"><label class="check-label" for="b1-5">カリキュラムのセクション：STEP 0〜3 の流れを図または箇条書きで表示する</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-6"><label class="check-label" for="b1-6">面談の流れのセクション：「面談ではこんなことを話します」を3ステップで説明する</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-7"><label class="check-label" for="b1-7">よくある質問（FAQ）：不安に答えるQ&Aを3〜5個作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-8"><label class="check-label" for="b1-8">申込ボタン（CTA）：「無料面談に申し込む」ボタンを設置する（リンク先は B-3 のフォーム）</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-9"><label class="check-label" for="b1-9">フッターに「特定商取引法に基づく表記」「プライバシーポリシー」のリンクを追加する</label></div>
+          <div class="check-item"><input type="checkbox" id="b1-10"><label class="check-label" for="b1-10">スマートフォンで表示確認する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-2　特商法ページ・プライバシーポリシーをUTAGEに設置する</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b2-1"><label class="check-label" for="b2-1">B-1 のファネルに「新規ページ」を追加して A-2 の文案を貼り付ける</label></div>
+          <div class="check-item"><input type="checkbox" id="b2-2"><label class="check-label" for="b2-2">ページを保存して URL をコピーする（ユニバペイ申請 A-1 に記入する）</label></div>
+          <div class="check-item"><input type="checkbox" id="b2-3"><label class="check-label" for="b2-3">プライバシーポリシーページも同様に作成して URL を取得する</label></div>
+          <div class="check-item"><input type="checkbox" id="b2-4"><label class="check-label" for="b2-4">LP フッター（B-1）に両ページのリンクを追加する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-3　面談申込フォームの設置</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">UTAGEのイベント機能で複数担当者のGoogleカレンダーと連携して空き枠を自動表示する。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b3-1"><label class="check-label" for="b3-1">UTAGE 管理画面で「イベント」→「追加」をクリックして面談イベントを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-2"><label class="check-label" for="b3-2">入力項目を設定する（氏名 / メール / 職種 / 年収帯 / 希望ルート / 希望日時 / 困っていること）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-3"><label class="check-label" for="b3-3">担当者ごとの Google カレンダーを登録する（複数人対応）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-4"><label class="check-label" for="b3-4">担当者ごとの Zoom を連携する（申込が入ったら担当者の Zoom URL が自動発行される）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-5"><label class="check-label" for="b3-5">申込完了後の自動返信メールを作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-6"><label class="check-label" for="b3-6">リマインドメールを設定する（前日・当日朝・1時間前）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-7"><label class="check-label" for="b3-7">キャンセル・日程変更の案内文を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-8"><label class="check-label" for="b3-8">無断キャンセル時の再予約メッセージを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-9"><label class="check-label" for="b3-9">管理者に面談申込通知が届くように設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-10"><label class="check-label" for="b3-10">面談枠の前後に余裕時間を設定する（例：前5分・後10分）</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-11"><label class="check-label" for="b3-11">LP（B-1）の「申し込む」ボタンにこのフォームの URL を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b3-12"><label class="check-label" for="b3-12">自分でテスト申込をして Zoom URL が自動で届くか確認する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-4　テレコムクレジット × UTAGE 連携</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">テレコムクレジットのアカウントはすでにある。新規審査は不要で「設定依頼書を出す→数日で使える」流れ。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b4-1"><label class="check-label" for="b4-1">【B-4a】UTAGE 管理画面で「ファネル」→「決済連携設定」→「テレコムクレジット連携設定」を開く</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-2"><label class="check-label" for="b4-2">【B-4a】「クライアントIP」を入力して「保存」を押す</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-3"><label class="check-label" for="b4-3">【B-4a】送信元IP・決済データ送信先URL・退会データ送信先URLの3つをメモする</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-4"><label class="check-label" for="b4-4">【B-4b】テレコムの担当者に「クレジット決済システム設定依頼書」を受け取る</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-5"><label class="check-label" for="b4-5">【B-4b】依頼書に3つのURL/IP・継続決済「利用する」・決済失敗送信「する」・<strong>rebill_param_id の発行依頼</strong> を記入して提出する</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-6"><label class="check-label" for="b4-6">【B-4b】テレコムクレジット側の設定完了連絡を待つ（数日〜1週間）</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-7"><label class="check-label" for="b4-7">【B-4b】完了連絡が来たら B-5 の分割ラインナップに rebill_param_id を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b4-8"><label class="check-label" for="b4-8">【B-4c・任意】ユニバペイ審査通過後：管理画面で「店舗ID」「アプリトークン」「シークレット」をコピーしてUTAGEに設定する（ドメイン欄に <code>utage-system.com</code> と入力）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-5　商品登録と決済ページの作成</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">B-4 の設定が完了してから作業する。テレコム or ユニバペイ、1つの商品ラインナップ内に複数の決済会社を混在させないこと。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b5-1"><label class="check-label" for="b5-1">UTAGE 管理画面で「ファネル」→「商品管理」→「商品追加」をクリックする</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-2"><label class="check-label" for="b5-2">一括払いラインナップを設定する（スタンダードプラン（一括）/ テレコムクレジット / 一回払い / 550,000円）</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-3"><label class="check-label" for="b5-3">分割払いラインナップを追加する（B-4b の rebill_param_id 受領後・回数・月額は確定後に入力）</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-4"><label class="check-label" for="b5-4">決済用のファネルを作り「決済フォーム」要素を追加して商品を連携する</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-5"><label class="check-label" for="b5-5">「決済後のリダイレクト先」にサンクスページの URL を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-6"><label class="check-label" for="b5-6">サンクスページを作成する（「ご購入ありがとうございます。次のステップは〜」の内容）</label></div>
+          <div class="check-item"><input type="checkbox" id="b5-7"><label class="check-label" for="b5-7">テスト決済を実行して、サンクスページに遷移することを確認する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-5b　銀行振込フロー</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">カード決済が間に合わない場合・振込を希望する人への対応。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b5b-1"><label class="check-label" for="b5b-1">振込先口座を決める</label></div>
+          <div class="check-item"><input type="checkbox" id="b5b-2"><label class="check-label" for="b5b-2">振込案内文を作る（口座情報・金額・振込期限・名義の注意）</label></div>
+          <div class="check-item"><input type="checkbox" id="b5b-3"><label class="check-label" for="b5b-3">入金確認の担当者と確認タイミングを決める</label></div>
+          <div class="check-item"><input type="checkbox" id="b5b-4"><label class="check-label" for="b5b-4">入金確認後のメール文面・未入金リマインド文面を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b5b-5"><label class="check-label" for="b5b-5">領収書・請求書・インボイス対応の方針を決める</label></div>
+          <div class="check-item"><input type="checkbox" id="b5b-6"><label class="check-label" for="b5b-6">振込申込者を管理する一覧を作る（氏名・メール・金額・期限・入金状況）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-5c　決済失敗・支払い途中離脱への対応</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b5c-1"><label class="check-label" for="b5c-1">カード決済失敗時に表示する案内文を確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b5c-2"><label class="check-label" for="b5c-2">別カードで試してもらう案内文・銀行振込へ切り替える案内文を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="b5c-3"><label class="check-label" for="b5c-3">決済ページを開いたが購入完了していない人を確認する方法を決める</label></div>
+          <div class="check-item"><input type="checkbox" id="b5c-4"><label class="check-label" for="b5c-4">支払い途中離脱者へのフォローメールを作る</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-6　LINE・メルマガをUTAGEのシナリオに登録する</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note"><code>drafts/</code> フォルダの文面をUTAGEのシナリオに転記する。先に B-6a で空欄を埋めてから登録すること。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b6a-1"><label class="check-label" for="b6a-1">【B-6a】<code>drafts/07-line-story.md</code> の「◯◯分」を実際の動画の長さに書き換える（C-3 撮影後に確定）</label></div>
+          <div class="check-item"><input type="checkbox" id="b6a-2"><label class="check-label" for="b6a-2">【B-6a】以下9ファイルの <code>{{勉強会LP_URL}}</code> を C-5 の視聴ページ URL に書き換える（09, 10, 11, 12, 13, 14, 15, 16）</label></div>
+          <div class="check-item"><input type="checkbox" id="b6-1"><label class="check-label" for="b6-1">UTAGE 管理画面で「メール・LINE配信」→「シナリオ」→「追加」をクリックする</label></div>
+          <div class="check-item"><input type="checkbox" id="b6-2"><label class="check-label" for="b6-2">LINE 8通を順番に登録する（01, 03, 05, 07, 09, 11, 13, 15）</label></div>
+          <div class="check-item"><input type="checkbox" id="b6-3"><label class="check-label" for="b6-3">メルマガ 8通を順番に登録する（02, 04, 06, 08, 10, 12, 14, 16）</label></div>
+          <div class="check-item"><input type="checkbox" id="b6-4"><label class="check-label" for="b6-4">LINE #3（30分後のフォローLINE）に「メルマガ登録済みの人は送らない」条件を設定する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-7　全体の動作テスト（6月11日〜16日）</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">ローンチ前に「実際に使えるか」を自分で1回通しで確認する。テスト後にテストデータを必ず削除する。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b7-1"><label class="check-label" for="b7-1">【①配信】自分のLINEでテスト登録し、LINE#1・メルマガ#1・LINE#3（条件分岐）が正しく届くか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-2"><label class="check-label" for="b7-2">【①配信】特典メールのリンクをすべてクリックして正しく開くか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-3"><label class="check-label" for="b7-3">【①配信】LINE・メルマガ全16通の配信時間が正しいか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-4"><label class="check-label" for="b7-4">【②動画】視聴ページ（C-5）を開いて動画が再生されるか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-5"><label class="check-label" for="b7-5">【②動画】カウントダウンタイマーが動いているか・3日後に封鎖されるか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-6"><label class="check-label" for="b7-6">【③面談】面談申込フォームに入力して Zoom URL が自動で届くか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-7"><label class="check-label" for="b7-7">【③面談】担当者ごとに正しいカレンダー・Zoom が割り当てられるか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-8"><label class="check-label" for="b7-8">【③面談】リマインドメールが前日・当日朝・1時間前に届くか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-9"><label class="check-label" for="b7-9">【④決済】テスト用カードで決済して、サンクスページ遷移・タグ付与・自動メールを確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-10"><label class="check-label" for="b7-10">【⑤スマホ】LP・面談フォーム・決済ページをスマートフォンで確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="b7-11"><label class="check-label" for="b7-11">【後始末】テスト用LINE・メルマガ登録、面談予約、決済データを削除する（テレコム側・UTAGE側の両方）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-8　タグ・ラベルの設定</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">タグとは「この人はどこまで進んだか」を管理する目印。これがないと購入者に営業メールが届いてしまう。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b8-1"><label class="check-label" for="b8-1">登録経路タグを決める（例：YouTube動画A、LINE登録、メルマガ登録）</label></div>
+          <div class="check-item"><input type="checkbox" id="b8-2"><label class="check-label" for="b8-2">メルマガ登録済み・動画URLクリック・面談申込済み・面談実施済み・申込案内送付済み・入金済みの各タグを設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b8-3"><label class="check-label" for="b8-3">購入者にはローンチ配信・締切煽りが止まるよう条件分岐を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b8-4"><label class="check-label" for="b8-4">配信停止リンクがメール本文に入っているか・退会後に再配信されないか確認する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">B-9　メール到達率の確認</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">メールが届かないだけで売上が落ちるため必須。SPF/DKIM/DMARCとはメールがなりすましでないと証明する設定。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="b9-1"><label class="check-label" for="b9-1">送信元メールアドレスと送信者名（例：ルナ）を統一する</label></div>
+          <div class="check-item"><input type="checkbox" id="b9-2"><label class="check-label" for="b9-2">独自ドメインを使う場合、SPF/DKIM/DMARC を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="b9-3"><label class="check-label" for="b9-3">Gmail・Yahooメール・iCloudメールでテスト受信する</label></div>
+          <div class="check-item"><input type="checkbox" id="b9-4"><label class="check-label" for="b9-4">迷惑メールに入った場合の改善対応をする</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE C -->
+  <div class="phase phase-c">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">C</span>
+      <span class="phase-title">動画の制作</span>
+      <span class="phase-meta">5月28日〜6月10日</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">C-1　勉強会動画の台本を仕上げる</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">台本はほぼ完成（<code>scripts/勉強会動画-台本.md</code>・907行）。残りの確認作業だけ。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="c1-1"><label class="check-label" for="c1-1"><code>scripts/勉強会動画-台本.md</code> を上から読んで気になる箇所をメモする</label></div>
+          <div class="check-item"><input type="checkbox" id="c1-2"><label class="check-label" for="c1-2">台本内の「〇月〇日まで」という固定日付の表現を「この動画が見られる3日以内に申し込んでください」に修正する</label></div>
+          <div class="check-item"><input type="checkbox" id="c1-3"><label class="check-label" for="c1-3">③ストーリーのパート：「Googleでこんな出来事があった」という具体的な場面をセリフレベルで肉付けする</label></div>
+          <div class="check-item"><input type="checkbox" id="c1-4"><label class="check-label" for="c1-4">⑤-3 実演パート：使うAIツールと画面に映す内容を決める（Geminiメイン・Claude補足など）</label></div>
+          <div class="check-item"><input type="checkbox" id="c1-5"><label class="check-label" for="c1-5">台本を最後まで読み上げて54分以内に収まるか確認する（目安：300字/分）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">C-2　アクションプランシートのサンプルを作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">面談の最後に「あなた専用のアクションプランシート」を渡すと約束している。動画内（⑦-3bのパート）でも画面に映して見せる。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="c2-1"><label class="check-label" for="c2-1"><code>materials/action-plan-sheet.md</code> を新規作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="c2-2"><label class="check-label" for="c2-2">3ルート（会社に残る／転職／独立）それぞれのシート構成を考える</label></div>
+          <div class="check-item"><input type="checkbox" id="c2-3"><label class="check-label" for="c2-3">Week 1〜4 でやることの行動計画テンプレートを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="c2-4"><label class="check-label" for="c2-4">動画撮影中に画面で見せられるよう、1枚の画面に収まる形に整える</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">C-3　動画を撮影する</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">C-1・C-2 が完成してから撮影する。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="c3-1"><label class="check-label" for="c3-1">撮影する場所の背景・照明・マイクを整える</label></div>
+          <div class="check-item"><input type="checkbox" id="c3-2"><label class="check-label" for="c3-2">画面収録ソフトを準備する（Mac：QuickTime Player、Windows：OBS Studio など）</label></div>
+          <div class="check-item"><input type="checkbox" id="c3-3"><label class="check-label" for="c3-3">アクションプランシートのサンプル（C-2）を画面で開いておく</label></div>
+          <div class="check-item"><input type="checkbox" id="c3-4"><label class="check-label" for="c3-4">台本を見ながら通しでリハーサルを1回する</label></div>
+          <div class="check-item"><input type="checkbox" id="c3-5"><label class="check-label" for="c3-5">本番を撮影する（本編約51分＋延長3分）</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">C-4　YouTubeに動画をアップして「限定公開」にする</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">限定公開とは：URLを知っている人だけが見られる設定。YouTubeで検索しても出てこない。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="c4-1"><label class="check-label" for="c4-1">動画を編集する（不要な部分のカット・テロップの追加）</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-2"><label class="check-label" for="c4-2">YouTube に動画をアップロードして「限定公開」に設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-3"><label class="check-label" for="c4-3">動画の URL をコピーしておく（C-5 で埋め込みに使う）</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-4"><label class="check-label" for="c4-4">動画の概要欄に「面談申込はこちら」として LP（B-1）の URL を載せる</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">C-5　勉強会動画の専用視聴ページを作る（UTAGE）</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">UTAGEのLP上に YouTube 動画を埋め込む専用ページ。このページのURLが <code>{{勉強会LP_URL}}</code> の差し替え先になる。登録から3日後にアクセスを封鎖する。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="c5-1"><label class="check-label" for="c5-1">UTAGE の「ファネル」に「勉強会視聴ページ」を追加する</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-2"><label class="check-label" for="c5-2">C-4 でアップロードした YouTube 動画を埋め込む</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-3"><label class="check-label" for="c5-3">ページ上部に「面談に申し込む」ボタンを設置する（リンク先：B-3 のフォーム）</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-4"><label class="check-label" for="c5-4">カウントダウンタイマーを表示する（UTAGEのタイマー機能）</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-5"><label class="check-label" for="c5-5">登録から3日後にページへのアクセスを封鎖する（UTAGEのアクセス期限機能）</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-6"><label class="check-label" for="c5-6">ページの URL をコピーして B-6a の <code>{{勉強会LP_URL}}</code> に入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-7"><label class="check-label" for="c5-7">スマートフォンで表示・再生・ボタンを確認する</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE D -->
+  <div class="phase phase-d">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">D</span>
+      <span class="phase-title">商品・運営の意思決定</span>
+      <span class="phase-meta">〜6月13日</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">D-1　サポート体制を決める</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">LP・面談でも説明するので、ローンチ前に必ず決めておく。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="d1-1"><label class="check-label" for="d1-1">サポートの形を決める（例：週1回グループ質問会 + 困ったときだけ個別Zoom）</label></div>
+          <div class="check-item"><input type="checkbox" id="d1-2"><label class="check-label" for="d1-2">連絡手段を決める（Slack / UTAGE内メッセージ / LINE / Zoom）</label></div>
+          <div class="check-item"><input type="checkbox" id="d1-3"><label class="check-label" for="d1-3">決めた内容を LP（B-1）と面談スクリプト（E-1）に反映する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">D-3　モニター候補をリストアップする</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="d3-1"><label class="check-label" for="d3-1"><code>materials/monitor-candidates.md</code> を新規作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="d3-2"><label class="check-label" for="d3-2">名前・特徴・連絡方法を一覧にして「すぐ動けそうか」「事例になってくれそうか」で優先度をつける</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE E -->
+  <div class="phase phase-e">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">E</span>
+      <span class="phase-title">面談後〜申込〜入金の流れ</span>
+      <span class="phase-meta">6月2日〜随時</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">E-1　面談スクリプトを作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="e1-1"><label class="check-label" for="e1-1">面談の全体構成を決める（例：冒頭5分・ヒアリング15分・提案20分・案内10分）</label></div>
+          <div class="check-item"><input type="checkbox" id="e1-2"><label class="check-label" for="e1-2">ヒアリング項目を作る（仕事・年収帯・AI利用経験・副業経験・使える時間・希望ルート・困っていること）</label></div>
+          <div class="check-item"><input type="checkbox" id="e1-3"><label class="check-label" for="e1-3">3ルート別の提案パターンを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="e1-4"><label class="check-label" for="e1-4">価格・支払い方法（一括55万円・分割は回数確定後）を説明するトークを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="e1-5"><label class="check-label" for="e1-5">「今日決めなくてもOK」の伝え方を決める</label></div>
+          <div class="check-item"><input type="checkbox" id="e1-6"><label class="check-label" for="e1-6">次のアクション（申込期限・支払い方法・開始日）を必ず伝えるチェックリストを作る</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">E-2　面談後に送るメール・LINEを作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="e2-1"><label class="check-label" for="e2-1">面談直後のお礼メールを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="e2-2"><label class="check-label" for="e2-2">申込案内メールを作る（決済リンク または 銀行振込案内）</label></div>
+          <div class="check-item"><input type="checkbox" id="e2-3"><label class="check-label" for="e2-3">申込期限を伝えるメールを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="e2-4"><label class="check-label" for="e2-4">未申込者へのフォローメールを作る（翌日・3日後）</label></div>
+          <div class="check-item"><input type="checkbox" id="e2-5"><label class="check-label" for="e2-5">未入金者へのフォローメールを作る（期限前日・期限当日）</label></div>
+          <div class="check-item"><input type="checkbox" id="e2-6"><label class="check-label" for="e2-6">申込を見送った人へのフォローメールを作る</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">E-3　申込フォーム・同意フォームを作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">面談で「入ります」と言った人に正式な申込情報を入力してもらうフォーム。ここで規約への同意も取る。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="e3-1"><label class="check-label" for="e3-1">入力項目を決める（氏名 / メール / 電話番号 / 希望ルート / 支払い方法 / 請求書・領収書の希望）</label></div>
+          <div class="check-item"><input type="checkbox" id="e3-2"><label class="check-label" for="e3-2">受講規約への同意チェックを入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="e3-3"><label class="check-label" for="e3-3">返金・キャンセル規定への同意チェックを入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="e3-4"><label class="check-label" for="e3-4">成果保証ではないことへの同意チェックを入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="e3-5"><label class="check-label" for="e3-5">個人情報の取り扱いへの同意チェックを入れる</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE F -->
+  <div class="phase phase-f">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">F</span>
+      <span class="phase-title">入金後〜受講開始の流れ</span>
+      <span class="phase-meta">6月11日〜随時</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">F-1　会員サイト・教材の提供方法を決める</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="f1-1"><label class="check-label" for="f1-1">UTAGEの会員サイトを使うか決める</label></div>
+          <div class="check-item"><input type="checkbox" id="f1-2"><label class="check-label" for="f1-2">コースを作成し、バンドルコース（購入者に開放する教材セット）を設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="f1-3"><label class="check-label" for="f1-3">商品購入後に開放するバンドルコースを設定する</label></div>
+          <div class="check-item"><input type="checkbox" id="f1-4"><label class="check-label" for="f1-4">ログインURL・初期パスワードを案内メールに入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="f1-5"><label class="check-label" for="f1-5">銀行振込の人を手動で会員サイトに登録する手順を決める</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">F-2　入金後の案内文を作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="f2-1"><label class="check-label" for="f2-1">入金確認メールを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="f2-2"><label class="check-label" for="f2-2">受講開始案内メールを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="f2-3"><label class="check-label" for="f2-3">初回オリエンテーションの案内・サポート場所への参加案内を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="f2-4"><label class="check-label" for="f2-4">最初の課題（アクションプランシート記入など）の案内・問い合わせ先を明記する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">F-3　受講生管理表を作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="f3-1"><label class="check-label" for="f3-1">管理項目を決める（氏名 / メール / 支払い方法 / 入金日 / 希望ルート / 開始日 / 終了日（6ヶ月後）/ 進捗メモ）</label></div>
+          <div class="check-item"><input type="checkbox" id="f3-2"><label class="check-label" for="f3-2">入金済み・未入金・受講開始済みのステータスを分ける</label></div>
+          <div class="check-item"><input type="checkbox" id="f3-3"><label class="check-label" for="f3-3">面談メモを残す場所を決める</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE G -->
+  <div class="phase phase-g">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">G</span>
+      <span class="phase-title">法務・規約・表現チェック</span>
+      <span class="phase-meta">今週中〜6月16日</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">G-1　受講規約を作る</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="g1-1"><label class="check-label" for="g1-1"><code>materials/terms.md</code> を作成する</label></div>
+          <div class="check-item"><input type="checkbox" id="g1-2"><label class="check-label" for="g1-2">サービス内容・提供期間（6ヶ月）・サポート範囲を明記する</label></div>
+          <div class="check-item"><input type="checkbox" id="g1-3"><label class="check-label" for="g1-3">禁止事項・返金・キャンセル規定・中途解約の扱いを明記する</label></div>
+          <div class="check-item"><input type="checkbox" id="g1-4"><label class="check-label" for="g1-4">成果保証ではないことを明記する</label></div>
+          <div class="check-item"><input type="checkbox" id="g1-5"><label class="check-label" for="g1-5">規約への同意を申込フォーム（E-3）で取る</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">G-2　特定継続的役務に該当するか確認する <span class="badge-urgent">★必須</span></span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">6ヶ月・55万円のため該当する可能性が高い。該当するとクーリングオフ・中途解約ルールが必要になる。専門家（行政書士・弁護士）への確認を推奨。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="g2-1"><label class="check-label" for="g2-1">提供期間が2ヶ月を超えるか確認する → はい（6ヶ月）</label></div>
+          <div class="check-item"><input type="checkbox" id="g2-2"><label class="check-label" for="g2-2">契約金額が5万円を超えるか確認する → はい（55万円）</label></div>
+          <div class="check-item"><input type="checkbox" id="g2-3"><label class="check-label" for="g2-3">AIスクールがパソコン教室扱いになり得るか専門家に確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="g2-4"><label class="check-label" for="g2-4">必要なら概要書面・契約書面を作る</label></div>
+          <div class="check-item"><input type="checkbox" id="g2-5"><label class="check-label" for="g2-5">クーリングオフ・中途解約の扱いを受講規約（G-1）に反映する</label></div>
+        </div>
+      </div>
+
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">G-3　広告表現・LP表現をチェックする</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="g3-1"><label class="check-label" for="g3-1">「月10万」「年収アップ」などの表現に注記を入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="g3-2"><label class="check-label" for="g3-2">「成果を保証するものではありません」という文言を入れる</label></div>
+          <div class="check-item"><input type="checkbox" id="g3-3"><label class="check-label" for="g3-3">事例を使う場合、本人の許可を取る</label></div>
+          <div class="check-item"><input type="checkbox" id="g3-4"><label class="check-label" for="g3-4">実績表記（Google、金盾・銀盾など）の出し方を確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="g3-5"><label class="check-label" for="g3-5">価格・期間・サポート範囲に矛盾がないか確認する</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE H -->
+  <div class="phase phase-h">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-tag">H</span>
+      <span class="phase-title">ローンチ当日運用</span>
+      <span class="phase-meta">6月11日〜16日に準備</span>
+      <span class="phase-chevron open">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="task-group">
+        <div class="task-group-header" onclick="toggleGroup(this)">
+          <span class="task-group-title">H　ローンチ当日チェックリスト</span>
+          <span class="task-group-count"></span><span>▼</span>
+        </div>
+        <div class="task-group-note">6月17日に「公開して終わり」ではなく、申込・問い合わせ・不具合に対応できる状態を作る。</div>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="h-1"><label class="check-label" for="h-1">LINE公式アカウントのMessaging API設定が完了しているか確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="h-2"><label class="check-label" for="h-2">UTAGEとLINE公式アカウントの連携設定が有効か確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="h-3"><label class="check-label" for="h-3">LINE公式アカウントのあいさつメッセージを確認する（UTAGEのウェルカムと重複しないか）</label></div>
+          <div class="check-item"><input type="checkbox" id="h-4"><label class="check-label" for="h-4">LP・面談フォーム・動画視聴ページの URL を最終確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="h-5"><label class="check-label" for="h-5">LINE・メルマガの送信開始タイミングを確認する</label></div>
+          <div class="check-item"><input type="checkbox" id="h-6"><label class="check-label" for="h-6">問い合わせ対応の担当者を決める</label></div>
+          <div class="check-item"><input type="checkbox" id="h-7"><label class="check-label" for="h-7">よくある問い合わせへの返信テンプレートを作る</label></div>
+          <div class="check-item"><input type="checkbox" id="h-8"><label class="check-label" for="h-8">面談枠が埋まった場合の追加枠ルールを決める</label></div>
+          <div class="check-item"><input type="checkbox" id="h-9"><label class="check-label" for="h-9">不具合が出た場合の一時対応文を作る</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  const STORAGE_KEY = 'launch_tasks_v1';
+
+  function save() {
+    const state = {};
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      state[cb.id] = cb.checked;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateProgress();
+  }
+
+  function load() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      if (state[cb.id] !== undefined) {
+        cb.checked = state[cb.id];
+        updateLabel(cb);
+      }
+    });
+    updateProgress();
+    updateGroupCounts();
+  }
+
+  function updateLabel(cb) {
+    const label = cb.nextElementSibling;
+    if (label) label.classList.toggle('done', cb.checked);
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('input[type="checkbox"]');
+    const done = [...all].filter(cb => cb.checked).length;
+    const pct = all.length ? Math.round(done / all.length * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' / ' + all.length + ' 完了';
+  }
+
+  function updateGroupCounts() {
+    document.querySelectorAll('.task-group').forEach(group => {
+      const all = group.querySelectorAll('input[type="checkbox"]');
+      const done = [...all].filter(cb => cb.checked).length;
+      const el = group.querySelector('.task-group-count');
+      if (el) el.textContent = done + ' / ' + all.length;
+    });
+  }
+
+  function resetAll() {
+    if (!confirm('すべてのチェックをリセットしますか？')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+      updateLabel(cb);
+    });
+    updateProgress();
+    updateGroupCounts();
+  }
+
+  function togglePhase(header) {
+    const chevron = header.querySelector('.phase-chevron');
+    const body = header.nextElementSibling;
+    const isOpen = chevron.classList.contains('open');
+    chevron.classList.toggle('open', !isOpen);
+    body.style.display = isOpen ? 'none' : '';
+  }
+
+  function toggleGroup(header) {
+    const items = header.parentElement.querySelectorAll('.checklist, .task-group-note');
+    const chevron = header.querySelector('span:last-child');
+    const isVisible = [...items].some(el => el.style.display !== 'none');
+    items.forEach(el => el.style.display = isVisible ? 'none' : '');
+    if (chevron) chevron.textContent = isVisible ? '▶' : '▼';
+  }
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      updateLabel(cb);
+      save();
+      updateGroupCounts();
+    });
+  });
+
+  load();
+  updateGroupCounts();
+</script>
+
+</body>
+</html>
