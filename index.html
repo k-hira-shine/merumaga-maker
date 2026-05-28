@@ -489,7 +489,7 @@
         <div><span class="task-id" style="color:#a855f7">🎬動画</span> C-3b 映像生成・スライド制作</div>
         <div><span class="task-id" style="color:#a855f7">🎬動画</span> C-3c 動画編集（音声＋映像・テロップ）</div>
         <div><span class="task-id" style="color:#a855f7">🎬動画</span> C-3d 通し確認・修正</div>
-        <div><span class="task-id" style="color:#a855f7">🎬動画</span> C-4 YouTubeに限定公開でアップ ← 6/11デッドライン</div>
+        <div><span class="task-id" style="color:#a855f7">🎬動画</span> C-4 UTAGEに動画をアップする ← 6/11デッドライン</div>
         <div><span class="task-id">B-1</span> LP（販売ページ）を制作する</div>
         <div><span class="task-id">B-2</span> 特商法ページ・プライバシーポリシーをUTAGEに設置する</div>
         <div><span class="task-id">B-3</span> 面談フォームを設置する（複数担当者・Zoom連携）</div>
@@ -875,10 +875,9 @@
         </div>
         <div class="task-group-note">限定公開とは：URLを知っている人だけが見られる設定。YouTubeで検索しても出てこない。</div>
         <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="c4-1"><label class="check-label" for="c4-1">動画を編集する（不要な部分のカット・テロップの追加）</label></div>
-          <div class="check-item"><input type="checkbox" id="c4-2"><label class="check-label" for="c4-2">YouTube に動画をアップロードして「限定公開」に設定する</label></div>
-          <div class="check-item"><input type="checkbox" id="c4-3"><label class="check-label" for="c4-3">動画の URL をコピーしておく（C-5 で埋め込みに使う）</label></div>
-          <div class="check-item"><input type="checkbox" id="c4-4"><label class="check-label" for="c4-4">動画の概要欄に「面談申込はこちら」として LP（B-1）の URL を載せる</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-1"><label class="check-label" for="c4-1">動画ファイルをエクスポートする（mp4形式）</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-2"><label class="check-label" for="c4-2">UTAGE 管理画面で「動画」→「動画アップロード」から動画をアップする</label></div>
+          <div class="check-item"><input type="checkbox" id="c4-3"><label class="check-label" for="c4-3">アップロード完了後、動画の URL または埋め込みコードをコピーしておく（C-5 で使う）</label></div>
         </div>
       </div>
 
@@ -887,10 +886,10 @@
           <span class="task-group-title">C-5　勉強会動画の専用視聴ページを作る（UTAGE）</span>
           <span class="task-group-count"></span><span>▼</span>
         </div>
-        <div class="task-group-note">UTAGEのLP上に YouTube 動画を埋め込む専用ページ。このページのURLが <code>{{勉強会LP_URL}}</code> の差し替え先になる。登録から3日後にアクセスを封鎖する。</div>
+        <div class="task-group-note">UTAGEのLPに C-4 でアップした動画を埋め込む専用ページ。このページのURLが <code>{{勉強会LP_URL}}</code> の差し替え先になる。登録から3日後にアクセスを封鎖する。</div>
         <div class="checklist">
           <div class="check-item"><input type="checkbox" id="c5-1"><label class="check-label" for="c5-1">UTAGE の「ファネル」に「勉強会視聴ページ」を追加する</label></div>
-          <div class="check-item"><input type="checkbox" id="c5-2"><label class="check-label" for="c5-2">C-4 でアップロードした YouTube 動画を埋め込む</label></div>
+          <div class="check-item"><input type="checkbox" id="c5-2"><label class="check-label" for="c5-2">C-4 でアップロードした動画を埋め込む（UTAGEの動画埋め込み要素を使う）</label></div>
           <div class="check-item"><input type="checkbox" id="c5-3"><label class="check-label" for="c5-3">ページ上部に「面談に申し込む」ボタンを設置する（リンク先：B-3 のフォーム）</label></div>
           <div class="check-item"><input type="checkbox" id="c5-4"><label class="check-label" for="c5-4">カウントダウンタイマーを表示する（UTAGEのタイマー機能）</label></div>
           <div class="check-item"><input type="checkbox" id="c5-5"><label class="check-label" for="c5-5">登録から3日後にページへのアクセスを封鎖する（UTAGEのアクセス期限機能）</label></div>
